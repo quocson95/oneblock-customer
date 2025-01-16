@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
-import { Grid, Box, Card, Stack, Typography } from "@mui/material";
+import { Grid, Box, Card, Button, Stack, Typography } from "@mui/material";
 // components
 import PageContainer from "@/app/(DashboardLayout)/components/container/PageContainer";
 import Logo from "@/app/(DashboardLayout)/layout/shared/logo/Logo";
 import AuthLogin from "../auth/AuthLogin";
-
+import GoogleIcon from '@mui/icons-material/Google';
 const Login2 = () => {
   return (
     <PageContainer title="Login" description="this is Login page">
@@ -47,7 +47,23 @@ const Login2 = () => {
               <Box display="flex" alignItems="center" justifyContent="center">
                 <Logo />
               </Box>
-              <AuthLogin
+              <Stack>
+                <Box>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      size="large"
+                      fullWidth
+                      component={Link}
+                      href="/"
+                      type="submit"
+                      startIcon={<GoogleIcon />}
+                    >
+                      Đăng nhập với tài khoản Google
+                    </Button>
+                </Box>   
+              </Stack>           
+              {/* <AuthLogin
                 subtext={
                   <Typography
                     variant="subtitle1"
@@ -55,7 +71,7 @@ const Login2 = () => {
                     color="textSecondary"
                     mb={1}
                   >
-                    Your Social Campaigns
+                    Oneblock.vn
                   </Typography>
                 }
                 subtitle={
@@ -85,7 +101,7 @@ const Login2 = () => {
                     </Typography>
                   </Stack>
                 }
-              />
+              /> */}
             </Card>
           </Grid>
         </Grid>
