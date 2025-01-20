@@ -6,7 +6,11 @@ import PageContainer from "@/app/(DashboardLayout)/components/container/PageCont
 import Logo from "@/app/(DashboardLayout)/layout/shared/logo/Logo";
 import AuthLogin from "../auth/AuthLogin";
 import GoogleIcon from '@mui/icons-material/Google';
-const Login2 = () => {
+import { API_URI } from "@/app/global";
+const Login = () => {
+  const loginGoolgeSSOURI = () => {
+   return API_URI + '/sso/google';
+  };
   return (
     <PageContainer title="Login" description="this is Login page">
       <Box
@@ -54,10 +58,10 @@ const Login2 = () => {
                       variant="contained"
                       size="large"
                       fullWidth
-                      component={Link}
-                      href="/"
-                      type="submit"
+                      component={Link}                     
                       startIcon={<GoogleIcon />}
+                      // onClick={loginGoolgeSSO}
+                      href={loginGoolgeSSOURI()}
                     >
                       Đăng nhập với tài khoản Google
                     </Button>
@@ -109,4 +113,4 @@ const Login2 = () => {
     </PageContainer>
   );
 };
-export default Login2;
+export default Login;
