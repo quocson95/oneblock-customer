@@ -8,8 +8,10 @@ import {
   IconUserPlus,
 } from "@tabler/icons-react";
 
-import { uniqueId } from "lodash";
 
+const uniqueID = ()=>{
+  return "id" + Math.random().toString(16).slice(2);
+}
 const Menuitems = [
   {
     navlabel: true,
@@ -17,7 +19,7 @@ const Menuitems = [
   },
 
   {
-    id: uniqueId(),
+    id: uniqueID(),
     title: "Dashboard",
     icon: IconLayoutDashboard,
     href: "/",
@@ -27,13 +29,13 @@ const Menuitems = [
     subheader: "Utilities",
   },
   {
-    id: uniqueId(),
+    id: uniqueID(),
     title: "Typography",
     icon: IconTypography,
     href: "/utilities/typography",
   },
   {
-    id: uniqueId(),
+    id: uniqueID(),
     title: "Shadow",
     icon: IconCopy,
     href: "/utilities/shadow",
@@ -43,13 +45,13 @@ const Menuitems = [
     subheader: "Auth",
   },
   {
-    id: uniqueId(),
+    id: uniqueID(),
     title: "Login",
     icon: IconLogin,
     href: "/authentication/login",
   },
   {
-    id: uniqueId(),
+    id: uniqueID(),
     title: "Register",
     icon: IconUserPlus,
     href: "/authentication/register",
@@ -59,13 +61,13 @@ const Menuitems = [
     subheader: "Extra",
   },
   {
-    id: uniqueId(),
+    id: uniqueID(),
     title: "Icons",
     icon: IconMoodHappy,
     href: "/icons",
   },
   {
-    id: uniqueId(),
+    id: uniqueID(),
     title: "Sample Page",
     icon: IconAperture,
     href: "/sample-page",

@@ -1,4 +1,5 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
+var PropTypes = require('prop-types');
 // mui imports
 import { ListSubheader, styled, Theme } from '@mui/material';
 

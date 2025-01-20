@@ -1,3 +1,5 @@
+"use client";
+
 import { AuthJWTLSKey } from "@/app/global";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";

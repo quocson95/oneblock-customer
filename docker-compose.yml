@@ -1,5 +1,5 @@
 services:
-  landing-cms:
+  oneblock_customer:
     container_name: oneblock_customer
     build:
       context: ./
