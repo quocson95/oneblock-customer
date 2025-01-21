@@ -47,25 +47,7 @@ export default function PricingPage() {
 
   return (
     <Box sx={{ bgcolor: "background.default", minHeight: "100vh" }}>
-      {/* Navigation */}
-      <AppBar position="static" color="transparent" elevation={0}>
-        <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Stack direction="row" spacing={3} alignItems="center">
-            <Link href="/">
-              <Image src="/placeholder.svg" alt="Logo" width={32} height={32} style={{ borderRadius: "50%" }} />
-            </Link>
-            <Link href="/pricing" style={{ color: "inherit", textDecoration: "none" }}>
-              <Typography variant="body2">Pricing</Typography>
-            </Link>
-            <Link href="/account" style={{ color: "inherit", textDecoration: "none" }}>
-              <Typography variant="body2">Account</Typography>
-            </Link>
-          </Stack>
-          <Button variant="outlined" size="small">
-            Sign in
-          </Button>
-        </Toolbar>
-      </AppBar>
+     
 
       {/* Main Content */}
       <Container maxWidth="lg" sx={{ py: 8 }}>
@@ -112,11 +94,11 @@ export default function PricingPage() {
                       <Typography variant="h2">
                         ${plan.price}
                         <Typography component="span" variant="body1" color="text.secondary" sx={{ ml: 1 }}>
-                          /month
+                          /tháng
                         </Typography>
                       </Typography>
                       <Button variant="contained" fullWidth>
-                        Subscribe
+                        Đăng kí
                       </Button>
                     </Stack>
                   </CardContent>
@@ -126,7 +108,7 @@ export default function PricingPage() {
           </Grid>
 
           {/* Footer */}
-          <Stack spacing={3} alignItems="center">
+          {/* <Stack spacing={3} alignItems="center">
             <Typography variant="overline" color="text.secondary" sx={{ letterSpacing: "0.1em" }}>
               Brought to you by
             </Typography>
@@ -136,7 +118,7 @@ export default function PricingPage() {
               <Image src="/placeholder.svg" alt="Stripe" width={80} height={40} />
               <Image src="/placeholder.svg" alt="Supabase" width={80} height={40} />
             </Stack>
-          </Stack>
+          </Stack> */}
         </Stack>
       </Container>
     </Box>
