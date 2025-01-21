@@ -72,6 +72,16 @@ const Menuitems = [
     icon: IconAperture,
     href: "/sample-page",
   },
+  {
+    navlabel: true,
+    subheader: "Payment",
+  },
+  {
+    id: uniqueID(),
+    title: "Offer",
+    icon: IconAperture,
+    href: "/payment/offer",
+  },
 ];
 
 export default Menuitems;
