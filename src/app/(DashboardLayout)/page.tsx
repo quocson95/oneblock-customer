@@ -8,8 +8,12 @@ import RecentTransactions from '@/app/(DashboardLayout)/components/dashboard/Rec
 import ProductPerformance from '@/app/(DashboardLayout)/components/dashboard/ProductPerformance';
 import Blog from '@/app/(DashboardLayout)/components/dashboard/Blog';
 import MonthlyEarnings from '@/app/(DashboardLayout)/components/dashboard/MonthlyEarnings';
+import { useEffect } from 'react';
 
 const Dashboard = () => {
+  useEffect(()=>{
+    
+  })
   return (
     <PageContainer title="Dashboard" description="this is Dashboard">
       <Box>

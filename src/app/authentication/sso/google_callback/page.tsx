@@ -13,7 +13,7 @@ const SSOCallback = () => {
     useEffect( () => {        
         // localStorage.setItem(AuthJWTLSKey, idToken);
         // const cookieStore = cookies();
-        setCookie(AuthJWTLSKey, idToken);
+        setCookie(AuthJWTLSKey, idToken, {maxAge: 86400*7 });
         router.push("/");
     }) 
 }
