@@ -74,9 +74,9 @@ export default function QRCodeDisplay() {
                 size={256}
                 level="H"
                 imageSettings={{
-                  src: "/placeholder.svg?height=24&width=24",
-                  height: 24,
-                  width: 24,
+                  src: "/images/logos/oneblock-cover.png?height=48&width=48",
+                  height: 48,
+                  width: 48,
                   excavate: true,
                 }}
               />
