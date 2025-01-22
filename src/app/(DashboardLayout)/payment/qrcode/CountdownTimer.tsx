@@ -28,7 +28,7 @@ export default function CountdownTimer({ initialMinutes, onComplete }: Countdown
 
   return (
     <div className="text-6xl font-bold tabular-nums">
-      {minutes.toString().padStart(2, "0")}:{seconds.toString().padStart(2, "0")}
+      <b><span>Remaining payment time:</span> {minutes.toString().padStart(2, "0")}:{seconds.toString().padStart(2, "0")}</b>
     </div>
   )
 }
