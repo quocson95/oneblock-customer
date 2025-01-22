@@ -39,10 +39,10 @@ export default function AuthorizedImage() {
     return <div className="text-red-500">{error}</div>
   }
 
-  return true? (
+  return (
     <div className="relative w-full h-full">
       <Image src={imageUrl || "/images/products/empty-shopping-bag.gif"} alt="Payment QR Code" width={400} height={400} style={{objectFit:"cover"}} unoptimized/>
     </div>
-  ) : null
+  )
 }
 
