@@ -6,11 +6,13 @@ import { AuthJWTLSKey } from './app/global'
 export function middleware(request: NextRequest) {
     const cookie = request.cookies.get(AuthJWTLSKey)  
     const token = cookie?.value || '';
-    console.log(token, token.length)
+    // console.log(token, token.length)
     if (token.length === 0) {
         return NextResponse.redirect(new URL('/authentication/login', request.url))
     }
-    return NextResponse.next();
+    const response = NextResponse.next()
+    response.cookies.set(AuthJWTLSKey, token, {maxAge: 86400*7});   
+    return response;
     
 }
  

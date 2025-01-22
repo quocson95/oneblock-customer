@@ -82,6 +82,12 @@ const Menuitems = [
     icon: IconAperture,
     href: "/payment/offer",
   },
+  {
+    id: uniqueID(),
+    title: "QrCode",
+    icon: IconAperture,
+    href: "/payment/qrcode",
+  },
 ];
 
 export default Menuitems;
