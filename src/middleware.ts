@@ -12,8 +12,7 @@ export function middleware(request: NextRequest) {
     }
     const response = NextResponse.next()
     response.cookies.set(AuthJWTLSKey, token, {maxAge: 86400*7});   
-    return response;
-    
+    return response;    
 }
  
 export const config = {

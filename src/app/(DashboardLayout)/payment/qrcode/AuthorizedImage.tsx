@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import axios from "axios"
 import Image from "next/image"
 import { getCookie } from "@/utils/cookiesUtils"
-import { AuthJWTLSKey } from "@/app/global"
+import { API_URI, AuthJWTLSKey } from "@/app/global"
+import axiosInstance from "@/lib/axiosInstance"
 
 export default function AuthorizedImage() {
     const [imageUrl, setImageUrl] = useState<string | null>(null)
@@ -18,10 +18,10 @@ export default function AuthorizedImage() {
     const fetchImage = async () => {
         try {
         const authToken = getCookie(AuthJWTLSKey);
-        const response = await axios.get("https://api.oneblock.vn/be/dashboard/payment/payos", {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
+        const response = await axiosInstance.get(API_URI + "/payment/payos", {
+          // headers: {
+          //   Authorization: `Bearer ${authToken}`,
+          // },
           responseType: "arraybuffer",
         })
 
@@ -32,7 +32,6 @@ export default function AuthorizedImage() {
         console.error("Error fetching image:", err)
       }
     }
-
     fetchImage()
   }, [])
 
@@ -40,9 +39,9 @@ export default function AuthorizedImage() {
     return <div className="text-red-500">{error}</div>
   }
 
-  return imageUrl ? (
+  return true? (
     <div className="relative w-full h-full">
-      <Image src={imageUrl || "/placeholder.svg"} alt="Payment QR Code" layout="fill" objectFit="contain" />
+      <Image src={imageUrl || "/images/products/empty-shopping-bag.gif"} alt="Payment QR Code" width={400} height={400} style={{objectFit:"cover"}} unoptimized/>
     </div>
   ) : null
 }
