@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Avatar,
@@ -12,15 +12,33 @@ import {
 } from "@mui/material";
 
 import { IconListCheck, IconMail, IconUser } from "@tabler/icons-react";
+import { User } from "../../utilities/model";
+import axiosInstance from "@/lib/axiosInstance";
+import { API_URI } from "@/app/global";
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
+  const [user, setUser] = useState<User>()
   const handleClick2 = (event: any) => {
     setAnchorEl2(event.currentTarget);
   };
   const handleClose2 = () => {
     setAnchorEl2(null);
   };
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await axiosInstance.get(API_URI + "/user", {
+          responseType: "json",
+        })
+        setUser(response.data);
+      } catch (err) {
+        console.error("Error fetching image:", err)
+      }
+    }
+    getUser();
+  }, [])
 
   return (
     <Box>
@@ -38,7 +56,7 @@ const Profile = () => {
         onClick={handleClick2}
       >
         <Avatar
-          src="/images/profile/user-1.jpg"
+          src={user?.picture}
           alt="image"
           sx={{
             width: 35,
@@ -49,7 +67,7 @@ const Profile = () => {
       {/* ------------------------------------------- */}
       {/* Message Dropdown */}
       {/* ------------------------------------------- */}
-      <Menu
+      {/* <Menu
         id="msgs-menu"
         anchorEl={anchorEl2}
         keepMounted
@@ -83,7 +101,7 @@ const Profile = () => {
         </MenuItem>
         <Box mt={1} py={1} px={2}>
           <Button
-            href="/authentication/login"
+            href="/authentication/logo"
             variant="outlined"
             color="primary"
             component={Link}
@@ -92,7 +110,7 @@ const Profile = () => {
             Logout
           </Button>
         </Box>
-      </Menu>
+      </Menu> */}
     </Box>
   );
 };
