@@ -198,8 +198,8 @@ export default function Checkout({ countdown, onCheckoutComplete }: QrCodeProps)
                   <Image
                     src="/images/logos/napas247.png?height=30&width=100"
                     alt="Napas 247"
-                    width={80}
-                    height={30}
+                    width={100}
+                    height={44}
                     // style={{ width: "100%", height: "auto" }}
                     className="w-full h-auto"
                   />
