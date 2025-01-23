@@ -18,7 +18,7 @@ import { API_URI } from "@/app/global";
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
-  const [user, setUser] = useState<User>()
+  const [user, setUser] = useState<User>({picture: '/images/profile/user-1.jpg',email:'', userName:''})
   const handleClick2 = (event: any) => {
     setAnchorEl2(event.currentTarget);
   };
@@ -67,7 +67,7 @@ const Profile = () => {
       {/* ------------------------------------------- */}
       {/* Message Dropdown */}
       {/* ------------------------------------------- */}
-      {/* <Menu
+      <Menu
         id="msgs-menu"
         anchorEl={anchorEl2}
         keepMounted
@@ -87,30 +87,31 @@ const Profile = () => {
           </ListItemIcon>
           <ListItemText>My Profile</ListItemText>
         </MenuItem>
-        <MenuItem>
+        {/* <MenuItem>
           <ListItemIcon>
             <IconMail width={20} />
           </ListItemIcon>
-          <ListItemText>My Account</ListItemText>
-        </MenuItem>
-        <MenuItem>
+          <ListItemText>Upgrade</ListItemText>
+        </MenuItem> */}
+        {/* <MenuItem>
           <ListItemIcon>
             <IconListCheck width={20} />
           </ListItemIcon>
           <ListItemText>My Tasks</ListItemText>
-        </MenuItem>
+        </MenuItem> */}
         <Box mt={1} py={1} px={2}>
           <Button
-            href="/authentication/logo"
+          onClick={handleClose2}
+            href="/payment/plan"
             variant="outlined"
             color="primary"
             component={Link}
             fullWidth
           >
-            Logout
+            Upgrade
           </Button>
         </Box>
-      </Menu> */}
+      </Menu>
     </Box>
   );
 };

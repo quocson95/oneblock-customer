@@ -100,7 +100,7 @@ export default function Checkout({ countdown, onCheckoutComplete }: QrCodeProps)
                 src="/images/logos/vietqr.png?height=50&width=150"
                 alt="VietQR Pro"
                 width={150}
-                height={0}
+                height={50}
                 // style={{ width: "100%", height: "auto" }}
                 className="w-full h-auto"
               />

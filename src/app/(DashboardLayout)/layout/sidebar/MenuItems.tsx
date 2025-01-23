@@ -84,9 +84,9 @@ const Menuitems = [
   },
   {
     id: uniqueID(),
-    title: "QrCode",
+    title: "Plan",
     icon: IconAperture,
-    href: "/payment/qrcode",
+    href: "/payment/plan",
   },
 ];
 
