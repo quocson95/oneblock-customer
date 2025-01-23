@@ -7,6 +7,8 @@ interface CountdownTimerProps {
   onComplete: () => void
 }
 
+export type {CountdownTimerProps};
+
 export default function CountdownTimer({ initialMinutes, onComplete }: CountdownTimerProps) {
   const [timeLeft, setTimeLeft] = useState(initialMinutes * 60)
 
