@@ -15,6 +15,7 @@ import { IconUser } from "@tabler/icons-react";
 import { User } from "../../../../lib/model";
 import axiosInstance from "@/lib/axiosInstance";
 import { API_URI } from "@/app/global";
+import { IconBrandPaypal } from "@tabler/icons-react";
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
@@ -99,18 +100,31 @@ const Profile = () => {
           </ListItemIcon>
           <ListItemText>My Tasks</ListItemText>
         </MenuItem> */}
-        <Box mt={1} py={1} px={2}>
-          <Button
-          onClick={handleClose2}
-            href="/payment/plan"
-            variant="outlined"
-            color="primary"
-            component={Link}
-            fullWidth
-          >
-            Upgrade
-          </Button>
-        </Box>
+       
+        {
+          user?.subscribe?.plan ?
+          (
+
+          <MenuItem>
+            <ListItemIcon>
+              <IconBrandPaypal width={20} />
+            </ListItemIcon>
+            <ListItemText>{user?.subscribe?.plan.name}</ListItemText>
+          </MenuItem>
+          ):
+          <Box mt={1} py={1} px={2}>
+            <Button
+            onClick={handleClose2}
+              href="/payment/plan"
+              variant="outlined"
+              color="primary"
+              component={Link}
+              fullWidth
+            >
+              Upgrade
+            </Button>
+          </Box>
+        }
       </Menu>
     </Box>
   );

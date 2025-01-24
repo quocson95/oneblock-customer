@@ -98,6 +98,12 @@ const Menuitems = [
     icon: IconAperture,
     href: "/customer",
   },
+  {
+    id: uniqueID(),
+    title: "Guide",
+    icon: IconAperture,
+    href: "/guide",
+  },
 ];
 
 export default Menuitems;

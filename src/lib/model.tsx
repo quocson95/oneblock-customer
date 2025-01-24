@@ -8,4 +8,19 @@ export interface User {
     picture: string
     lastLoginUnix: number
     role: number
+    subscribe: Subscribe,
+}
+
+export interface Subscribe {
+    plan?: Plan,
+    expireUnix: number,
+}
+
+export interface Plan {
+    name: string
+    price: number
+    priceDisp: string
+    currency: string
+    durationExtend: string,
+
 }
