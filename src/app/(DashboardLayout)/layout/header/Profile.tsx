@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 
 import { IconListCheck, IconMail, IconUser } from "@tabler/icons-react";
-import { User } from "../../utilities/model";
+import { User } from "../../../../lib/model";
 import axiosInstance from "@/lib/axiosInstance";
 import { API_URI } from "@/app/global";
 

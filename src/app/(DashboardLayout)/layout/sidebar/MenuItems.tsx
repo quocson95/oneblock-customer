@@ -88,6 +88,16 @@ const Menuitems = [
     icon: IconAperture,
     href: "/payment/plan",
   },
+  {
+    navlabel: true,
+    subheader: "Customer",
+  },
+  {
+    id: uniqueID(),
+    title: "Manager",
+    icon: IconAperture,
+    href: "/customer",
+  },
 ];
 
 export default Menuitems;
