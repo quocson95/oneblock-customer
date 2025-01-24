@@ -7,31 +7,31 @@ import { API_URI } from "../../global";
 import { Avatar, Box, Container, Grid, Typography } from "@mui/material";
 import { DataGrid, GridCellParams, GridColDef } from "@mui/x-data-grid";
 
-export function renderAvatar(
-    params: GridCellParams<{ picture: string; color: string }, any, any>,
-  ) {
-    if (params.value == null) {
-      return '';
-    }
-  
-    return (
-        <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-            <Avatar
-                src={params.formattedValue}
-                sx={{
-                // backgroundColor: params.value.color,
-                width: '24px',
-                height: '24px',
-                fontSize: '0.85rem',
-                }}>
-            </Avatar>
-        </div>
-    );
-  }
+
   
 const CustomerPage = () =>{
     const [customers, setCustomers] = useState<User[]>([]);
-    
+    const renderAvatar = (
+        params: GridCellParams<{ picture: string; color: string }, any, any>,
+      ) => {
+        if (params.value == null) {
+          return '';
+        }
+      
+        return (
+            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                <Avatar
+                    src={params.formattedValue}
+                    sx={{
+                    // backgroundColor: params.value.color,
+                    width: '24px',
+                    height: '24px',
+                    fontSize: '0.85rem',
+                    }}>
+                </Avatar>
+            </div>
+        );
+      }
     const columns: GridColDef[] = [
         { field: 'id', headerName: 'ID', width: 90 },
         {
@@ -52,6 +52,7 @@ const CustomerPage = () =>{
             renderCell: renderAvatar,
         },
     ];
+    
 
     // const rows: User[] = [];
     useEffect(()=>{

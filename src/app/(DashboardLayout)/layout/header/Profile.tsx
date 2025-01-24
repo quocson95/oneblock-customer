@@ -11,14 +11,14 @@ import {
   ListItemText,
 } from "@mui/material";
 
-import { IconListCheck, IconMail, IconUser } from "@tabler/icons-react";
+import { IconUser } from "@tabler/icons-react";
 import { User } from "../../../../lib/model";
 import axiosInstance from "@/lib/axiosInstance";
 import { API_URI } from "@/app/global";
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
-  const [user, setUser] = useState<User>({picture: '/images/profile/user-1.jpg',email:'', userName:''})
+  const [user, setUser] = useState<User>()
   const handleClick2 = (event: any) => {
     setAnchorEl2(event.currentTarget);
   };
@@ -56,7 +56,7 @@ const Profile = () => {
         onClick={handleClick2}
       >
         <Avatar
-          src={user?.picture}
+          src={user?user.picture:'/images/profile/user-1.jpg'}
           alt="image"
           sx={{
             width: 35,
