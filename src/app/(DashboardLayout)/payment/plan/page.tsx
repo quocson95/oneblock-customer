@@ -11,9 +11,7 @@ import { CountdownTimerProps } from "./CountdownTimer";
 const QrPayment = () => {
     const [overtime, setOvertime] = useState(false);
     const[checkoutComplete, setCheckoutComplete] = useState(false);
-    const countdownProp: CountdownTimerProps = {initialMinutes: 1, onComplete: () =>{
-        setOvertime(true);
-    }}    
+       
     const onCheckoutComplete = () =>{
         setCheckoutComplete(true);
     }
@@ -24,7 +22,7 @@ const QrPayment = () => {
                 <>
                 { !overtime ? 
                     (
-                        <Checkout countdown={countdownProp} onCheckoutComplete={onCheckoutComplete}></Checkout>
+                        <Checkout  onComplete={onCheckoutComplete} onExire={()=>{setOvertime(true)}}></Checkout>
                     ):
                     <CheckoutMsg message="Payment order expired" imageUrl="/images/products/empty-shopping-bag.gif" ></CheckoutMsg>
                 }

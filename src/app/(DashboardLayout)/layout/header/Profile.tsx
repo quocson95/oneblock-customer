@@ -13,9 +13,12 @@ import {
 
 import { IconUser } from "@tabler/icons-react";
 import { User } from "../../../../lib/model";
-import axiosInstance from "@/lib/axiosInstance";
-import { API_URI } from "@/app/global";
+import {  AuthJWTLSKey } from "@/app/global";
 import { IconBrandPaypal } from "@tabler/icons-react";
+import {  GotoLoginPage } from "@/lib/goto";
+import { useRouter } from "next/navigation";
+import { setCookie } from "cookies-next/client";
+import { getUser } from "@/lib/user";
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
@@ -26,19 +29,12 @@ const Profile = () => {
   const handleClose2 = () => {
     setAnchorEl2(null);
   };
-
+  const router = useRouter()
   useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await axiosInstance.get(API_URI + "/user", {
-          responseType: "json",
-        })
-        setUser(response.data);
-      } catch (err) {
-        console.error("Error fetching image:", err)
-      }
-    }
-    getUser();
+    getUser().then( setUser).catch( (err)=>{
+      setCookie(AuthJWTLSKey, "");
+      GotoLoginPage(router);
+    });
   }, [])
 
   return (

@@ -19,15 +19,16 @@ export interface PaymentInfo {
   description: string
   checkoutUrl: string
   status: number
+  cdCheckoutBySec: number;
 }
 
 
-export interface QrCodeProps {
-  countdown: CountdownTimerProps,
-  onCheckoutComplete:  () => void,
+export interface CheckoutProps {
+  onComplete:  () => void,
+  onExire:() => void,
 }
 
-const fetchImage = async (setPaymentInfo: any) => {
+const getPaymentInfo = async (setPaymentInfo: any) => {
   try {
     const response = await axiosInstance.get(API_URI + "/payment/payos?id=1", {
       responseType: "json",
@@ -40,39 +41,37 @@ const fetchImage = async (setPaymentInfo: any) => {
   }
 }
 
-export default function Checkout({ countdown, onCheckoutComplete }: QrCodeProps) {
+export default function Checkout({ onExire: onCheckoutExpire , onComplete: onCheckoutComplete }: CheckoutProps) {
   const loading = useRef(false);
   const [paymentInfo, setPaymentInfo] = useState<PaymentInfo>();
-  const [openBackDrop, setOpenBackDrop] = useState<boolean>(false);
-  
   const [count, setCount] = useState(0);
-
+  const cd = useRef(60*20);
+  
   useEffect(() => {
     if (loading.current) {
         return;
     }
     loading.current = true;
-    fetchImage(setPaymentInfo)
+    getPaymentInfo(setPaymentInfo)
   }, [])
 
   useEffect(()=>{
-    console.log(count)
-
     const interval = setInterval(() => {
-      
       checkStatusCheckout(paymentInfo?.orderCode || 0).then( (res) => {
         if (res) {
           clearInterval(interval);
-        } else {
-          setCount(count+1);
+          return;
         }
-       
+        setCount(count+1);
       })
-   }, 2000);
+   }, 1000);
  
    return () => clearInterval(interval);
   },[count])
 
+  const checkoutCountdown = ():number =>  {
+    return cd.current;
+  }
 
   const checkStatusCheckout = async (orderCode: number) =>  {
     if (orderCode === 0) {
@@ -81,12 +80,15 @@ export default function Checkout({ countdown, onCheckoutComplete }: QrCodeProps)
     const response = await axiosInstance.get(API_URI + "/payment/payos/" + orderCode, {
       responseType: "json",
     })
-    const paymentInfo: PaymentInfo = response.data;
-    if (paymentInfo.status == 3) {
+    const pi: PaymentInfo = response.data;
+    setPaymentInfo(pi);
+    if (pi.status == 3) {
       onCheckoutComplete()
       return true;
     }
+    cd.current = pi.cdCheckoutBySec;
   }
+
 
   return (
     <Container maxWidth="sm" sx={{ py: 4 }}>
@@ -128,7 +130,9 @@ export default function Checkout({ countdown, onCheckoutComplete }: QrCodeProps)
                   excavate: true,
                 }}
               />
-              <CountdownTimer initialMinutes={countdown.initialMinutes} onComplete={countdown.onComplete}></CountdownTimer>
+              <CountdownTimer remainCoutdown={()=>{
+                return  checkoutCountdown();
+              }} onComplete={onCheckoutExpire} ></CountdownTimer>
             </Box>
 
             {/* Bank Info */}

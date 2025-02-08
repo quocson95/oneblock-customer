@@ -7,7 +7,19 @@ import Logo from "@/app/(DashboardLayout)/layout/shared/logo/Logo";
 import AuthLogin from "../auth/AuthLogin";
 import GoogleIcon from '@mui/icons-material/Google';
 import { API_URI } from "@/app/global";
+import { useEffect } from "react";
+import { getUser } from "@/lib/user";
+import { GotoHomePage } from "@/lib/goto";
+import { useRouter } from "next/navigation";
 const Login = () => {
+  const router = useRouter();
+  useEffect(()  => {
+    getUser().then( (user) => {
+      console.log('detect user => redirect to dashboard',user);
+      GotoHomePage(router);
+    }
+    )
+  })
   const loginGoolgeSSOURI = () => {
    return API_URI + '/sso/google';
   };

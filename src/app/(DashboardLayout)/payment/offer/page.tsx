@@ -14,9 +14,10 @@ import {
   Toolbar,
   Typography,
   styled,
+  Link
 } from "@mui/material"
 import Image from "next/image"
-import Link from "next/link"
+
 import { useState } from "react"
 
 const StyledCard = styled(Card)(({ theme, selected }: { theme: any; selected?: boolean }) => ({
@@ -30,9 +31,9 @@ const StyledCard = styled(Card)(({ theme, selected }: { theme: any; selected?: b
 }))
 
 const plans = [
-  { name: "Hobby", price: "12" },
-  { name: "Freelancer", price: "24" },
-  { name: "Startup", price: "32" },
+  // { name: "Hobby", price: "12" },
+  // { name: "Freelancer", price: "24" },
+  // { name: "Startup", price: "32" },
   { name: "Enterprise", price: "48" },
 ]
 
@@ -72,9 +73,9 @@ export default function PricingPage() {
               borderRadius: 2,
             }}
           >
-            <ToggleButton value="monthly" aria-label="monthly billing">
+            {/* <ToggleButton value="monthly" aria-label="monthly billing">
               Monthly billing
-            </ToggleButton>
+            </ToggleButton> */}
             <ToggleButton value="yearly" aria-label="yearly billing">
               Yearly billing
             </ToggleButton>
@@ -94,11 +95,10 @@ export default function PricingPage() {
                       <Typography variant="h2">
                         ${plan.price}
                         <Typography component="span" variant="body1" color="text.secondary" sx={{ ml: 1 }}>
-                          /tháng
+                          /month
                         </Typography>
                       </Typography>
-                      <Button variant="contained" fullWidth>
-                        Đăng kí
+                      <Button variant="contained" fullWidth  component={Link} href="/payment/plan" > Subscribe
                       </Button>
                     </Stack>
                   </CardContent>
