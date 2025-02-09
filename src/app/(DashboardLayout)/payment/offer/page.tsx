@@ -57,7 +57,7 @@ export default function PricingPage() {
           <Stack spacing={2} textAlign="center" maxWidth="md">
             <Typography variant="h1">Pricing Plans</Typography>
             <Typography variant="h6" color="text.secondary">
-              Start building for free, then add a site plan to go live. Account plans unlock additional features.
+              Account plans unlock additional features.
             </Typography>
           </Stack>
 
@@ -90,7 +90,7 @@ export default function PricingPage() {
                     <Stack spacing={3}>
                       <Typography variant="h2">{plan.name}</Typography>
                       <Typography variant="body2" color="text.secondary">
-                        All the basics for starting a new business
+                        All the feature
                       </Typography>
                       <Typography variant="h2">
                         ${plan.price}

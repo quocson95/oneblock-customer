@@ -1,3 +1,5 @@
+'use client'
+import * as React from 'react';
 
 import {
     Typography, Box,
@@ -6,9 +8,12 @@ import {
     TableCell,
     TableHead,
     TableRow,
-    Chip
+    Chip,
+    Button,
+    Modal
 } from '@mui/material';
 import DashboardCard from '@/app/(DashboardLayout)//components/shared/DashboardCard';
+import CopyTradeOrderDialog from './CopyTradeOrderPopup';
 
 const products = [
     {
@@ -51,10 +56,23 @@ const products = [
 
 
 const ProductPerformance = () => {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
     return (
 
         <DashboardCard title="Product Performance">
             <Box sx={{ overflow: 'auto', width: { xs: '280px', sm: 'auto' } }}>
+                <Button onClick={handleOpen}>Open modal</Button>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <CopyTradeOrderDialog></CopyTradeOrderDialog>
+                </Modal>
                 <Table
                     aria-label="simple table"
                     sx={{
