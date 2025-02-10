@@ -1,5 +1,4 @@
 'use client'
-import * as React from 'react';
 
 import {
     Typography, Box,
@@ -13,7 +12,12 @@ import {
     Modal
 } from '@mui/material';
 import DashboardCard from '@/app/(DashboardLayout)//components/shared/DashboardCard';
-import CopyTradeOrderDialog from './CopyTradeOrderPopup';
+import CopyTradeOrderPopup, { CopyTradeData } from './CopyTradeOrderPopup';
+import { useEffect, useState } from 'react';
+import axiosInstance from '@/lib/axiosInstance';
+import { API_URI } from '@/app/global';
+import { parseISO, format } from 'date-fns';
+
 
 const products = [
     {
@@ -56,23 +60,50 @@ const products = [
 
 
 const ProductPerformance = () => {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const [open, setOpen] = useState(false);
+    const [selectedValue, setSelectedValue] = useState<CopyTradeData>({dateCloseUnix:0,id:0,leverage:0,long:0,margin:0,pnl:0,statusOrder:0,updatedAt:"0", roi:0});
+    const [count, setCount] =  useState<number>(0);
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
 
+    const handleClose = (value: CopyTradeData) => {
+    setOpen(false);
+    // setSelectedValue(value);
+    console.log(value)
+    };
+    const handleSubmit = async (value: CopyTradeData) => {
+    setOpen(false);
+    // setSelectedValue(value);
+    // console.log(value)
+    await axiosInstance.post(API_URI + "/customer/copy-trade", value);
+    setCount(count+1);
+    };
+
+    const [copyTradeOrders, setCopyTradeOrders] = useState<CopyTradeData[]>([])
+    useEffect(()=>{
+        const loadCopyTradeOrders = async () => {
+            const response = await axiosInstance.get(API_URI + "/customer/copy-trade");
+            if  (response.status == 200) {
+                setCopyTradeOrders(response.data);
+            }
+        }
+
+        loadCopyTradeOrders();
+    },[count])
     return (
 
         <DashboardCard title="Product Performance">
             <Box sx={{ overflow: 'auto', width: { xs: '280px', sm: 'auto' } }}>
-                <Button onClick={handleOpen}>Open modal</Button>
-                <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <CopyTradeOrderDialog></CopyTradeOrderDialog>
-                </Modal>
+                <Button variant="outlined" onClick={handleClickOpen}>
+                        Open dialog
+                      </Button>
+                      <CopyTradeOrderPopup
+                        selectedValue={selectedValue}
+                        open={open}
+                        onClose={handleClose}
+                        onSubmit={handleSubmit}
+                      />
                 <Table
                     aria-label="simple table"
                     sx={{
@@ -89,29 +120,40 @@ const ProductPerformance = () => {
                             </TableCell>
                             <TableCell>
                                 <Typography variant="subtitle2" fontWeight={600}>
-                                    Assigned
+                                    Date
                                 </Typography>
                             </TableCell>
                             <TableCell>
                                 <Typography variant="subtitle2" fontWeight={600}>
-                                    Name
+                                    Margin
                                 </Typography>
                             </TableCell>
                             <TableCell>
                                 <Typography variant="subtitle2" fontWeight={600}>
-                                    Priority
+                                Leverage
                                 </Typography>
                             </TableCell>
                             <TableCell align="right">
                                 <Typography variant="subtitle2" fontWeight={600}>
-                                    Budget
+                                    PNL
                                 </Typography>
                             </TableCell>
+                            <TableCell align="right">
+                                <Typography variant="subtitle2" fontWeight={600}>
+                                    ROI
+                                </Typography>
+                            </TableCell>
+                            <TableCell align="right">
+                                <Typography variant="subtitle2" fontWeight={600}>
+                                    Type
+                                </Typography>
+                            </TableCell>
+                           
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {products.map((product) => (
-                            <TableRow key={product.name}>
+                        {copyTradeOrders.map((copyTrade: CopyTradeData) => (
+                            <TableRow key={copyTrade.id}>
                                 <TableCell>
                                     <Typography
                                         sx={{
@@ -119,7 +161,7 @@ const ProductPerformance = () => {
                                             fontWeight: "500",
                                         }}
                                     >
-                                        {product.id}
+                                        {copyTrade.id}
                                     </Typography>
                                 </TableCell>
                                 <TableCell>
@@ -131,37 +173,39 @@ const ProductPerformance = () => {
                                     >
                                         <Box>
                                             <Typography variant="subtitle2" fontWeight={600}>
-                                                {product.name}
+                                                { format(new Date(copyTrade.dateCloseUnix*1000).toString(), 'yyyy/mm/dd hh:mm:ss')}
                                             </Typography>
-                                            <Typography
+                                            
+                                        </Box>
+                                    </Box>
+                                </TableCell>
+                                <TableCell align="center">
+                                <Typography
                                                 color="textSecondary"
                                                 sx={{
                                                     fontSize: "13px",
                                                 }}
                                             >
-                                                {product.post}
+                                                ${copyTrade.margin}
                                             </Typography>
-                                        </Box>
-                                    </Box>
                                 </TableCell>
-                                <TableCell>
+                                <TableCell  align="center">
                                     <Typography color="textSecondary" variant="subtitle2" fontWeight={400}>
-                                        {product.pname}
+                                        x{copyTrade.leverage}
                                     </Typography>
                                 </TableCell>
-                                <TableCell>
-                                    <Chip
-                                        sx={{
-                                            px: "4px",
-                                            backgroundColor: product.pbg,
-                                            color: "#fff",
-                                        }}
-                                        size="small"
-                                        label={product.priority}
-                                    ></Chip>
-                                </TableCell>
-                                <TableCell align="right">
-                                    <Typography variant="h6">${product.budget}k</Typography>
+                                <TableCell  align="center">
+                                    <Typography color="textSecondary" variant="subtitle2" fontWeight={400}>
+                                        {copyTrade.pnl}
+                                    </Typography>
+                                </TableCell >
+                                <TableCell  align="center">
+                                    <Typography color="textSecondary" variant="subtitle2" fontWeight={400}>
+                                        {copyTrade.roi}%
+                                    </Typography>
+                                </TableCell >
+                                <TableCell align="center">
+                                    <Typography variant="h6">{copyTrade.long?"LONG":"SHORT"}</Typography>
                                 </TableCell>
                             </TableRow>
                         ))}

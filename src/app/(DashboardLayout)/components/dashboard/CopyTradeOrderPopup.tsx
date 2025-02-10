@@ -1,52 +1,90 @@
-"use client"
-import { TextField, Button, Container, Typography, Box } from "@mui/material"
-import { useForm, Controller } from "react-hook-form"
+import Button from '@mui/material/Button';
+import Avatar from '@mui/material/Avatar';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
+import PersonIcon from '@mui/icons-material/Person';
+import AddIcon from '@mui/icons-material/Add';
+import Typography from '@mui/material/Typography';
+import { blue } from '@mui/material/colors';
+import { Controller, useForm } from 'react-hook-form';
+import { Box, Container, TextField } from '@mui/material';
+import DateTimeSelector from '../DateTimeSelector';
+import { useState } from 'react';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
 
-type FormData = {
-  id: number
-  statusOrder: number
-  pnl: number
-  leverage: number
-  margin: number
-  long: number
-  updatedAt: string
+export interface SimpleDialogProps {
+  open: boolean;
+  selectedValue: CopyTradeData;
+  onClose: (value: CopyTradeData) => void;
+  onSubmit: (value: CopyTradeData) => void;
 }
 
-export default function CopyTradeOrderDialog() {
-  const {
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+  
+ export  type CopyTradeData = {
+    id: number;
+    statusOrder: number;
+    pnl: number;
+    leverage: number;
+    margin: number;
+    long: number;
+    updatedAt: string;
+    dateCloseUnix: number,
+    roi: number,
+  };
+  
+export default function CopyTradeOrderPopup(props: SimpleDialogProps) {
+      const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>()
+  } = useForm<CopyTradeData>();
+  const { onClose, onSubmit, selectedValue, open } = props;
+  const [dateUnix, setDateUnix]= useState<number>(new Date().getTime());
+  const handleClose = () => {
+    onClose(selectedValue);
+  };
 
-  const onSubmit = async (data: FormData) => {
-    
-  }
-
+  const handlerSubmit = handleSubmit((data) => {
+    selectedValue.leverage = +data.leverage;
+    selectedValue.long = +data.long;
+    selectedValue.margin = +data.margin;
+    selectedValue.pnl = +data.pnl;
+    selectedValue.statusOrder = 2;
+    onSubmit(selectedValue);
+  })
+// const onSubmit = handleSubmit((data) => console.log(data))
   return (
-    <Container maxWidth="sm">
-      <Box sx={style}>
+    <Dialog onClose={handleClose} open={open}>
+      {/* <DialogTitle sx={style}>Set backup account</DialogTitle> */}
         <Typography variant="h4" component="h1" gutterBottom>
           CopyTrade Order
         </Typography>
-        <form onSubmit={handleSubmit(onSubmit)}>
-        <Controller
+        <DateTimeSelector onDateTimeChanged={(date) => {
+            selectedValue.dateCloseUnix = date.getTime()/1000;
+        }} />
+        <form onSubmit={handlerSubmit} >
+          <Controller
             name="id"
             control={control}
             defaultValue={0}
-            rules={{ required: "Id is required" ,min:1}}
+            disabled
+            rules={{ required: "Id is required", min: 1, }}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -62,15 +100,17 @@ export default function CopyTradeOrderDialog() {
             name="statusOrder"
             control={control}
             defaultValue={0}
-            rules={{ required: "StatusOrder is required",
+            rules={{
+              required: "StatusOrder is required",
               min: {
                 value: 0,
-                message: "StatusOrder must larger than zero",
+                message: "StatusOrder must be larger than zero",
               },
-             }}
+            } }
             render={({ field }) => (
               <TextField
                 {...field}
+                type='number'
                 margin="normal"
                 fullWidth
                 label="Status Order"
@@ -84,10 +124,10 @@ export default function CopyTradeOrderDialog() {
             control={control}
             defaultValue={0}
             rules={{
-              required: "pnl is required",
+              required: "PNL is required",
               min: {
                 value: 0,
-                message: "pnl must larger than zero",
+                message: "PNL must be larger than zero",
               },
             }}
             render={({ field }) => (
@@ -106,10 +146,10 @@ export default function CopyTradeOrderDialog() {
             control={control}
             defaultValue={0}
             rules={{
-              required: "leverage is required",
+              required: "Leverage is required",
               min: {
                 value: 0,
-                message: "leverage must larger than zero",
+                message: "Leverage must be larger than zero",
               },
             }}
             render={({ field }) => (
@@ -127,12 +167,13 @@ export default function CopyTradeOrderDialog() {
             name="margin"
             control={control}
             defaultValue={1}
-            rules={{ required: "margin is required",
+            rules={{
+              required: "Margin is required",
               min: {
                 value: 1,
-                message: "margin must larger than one",
+                message: "Margin must be larger than one",
               },
-             }}
+            }}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -148,12 +189,13 @@ export default function CopyTradeOrderDialog() {
             name="long"
             control={control}
             defaultValue={1}
-            rules={{ required: "long is required",
+            rules={{
+              required: "Long is required",
               min: {
                 value: 0,
-                message: "long must larger than one",
+                message: "Long must be larger than one",
               },
-             }}
+            }}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -169,8 +211,6 @@ export default function CopyTradeOrderDialog() {
             Register
           </Button>
         </form>
-      </Box>
-    </Container>
-  )
+    </Dialog>
+  );
 }
-
