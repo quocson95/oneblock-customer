@@ -173,7 +173,7 @@ const ProductPerformance = () => {
                                     >
                                         <Box>
                                             <Typography variant="subtitle2" fontWeight={600}>
-                                                { format(new Date(copyTrade.dateCloseUnix*1000).toString(), 'yyyy/mm/dd hh:mm:ss')}
+                                                { format(new Date(copyTrade.dateCloseUnix*1000).toString(), 'yyyy/MM/dd hh:mm:ss')}
                                             </Typography>
                                             
                                         </Box>
