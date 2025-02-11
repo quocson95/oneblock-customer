@@ -24,54 +24,54 @@ const Menuitems = [
     icon: IconLayoutDashboard,
     href: "/",
   },
-  {
-    navlabel: true,
-    subheader: "Utilities",
-  },
-  {
-    id: uniqueID(),
-    title: "Typography",
-    icon: IconTypography,
-    href: "/utilities/typography",
-  },
-  {
-    id: uniqueID(),
-    title: "Shadow",
-    icon: IconCopy,
-    href: "/utilities/shadow",
-  },
-  {
-    navlabel: true,
-    subheader: "Auth",
-  },
-  {
-    id: uniqueID(),
-    title: "Login",
-    icon: IconLogin,
-    href: "/authentication/login",
-  },
-  {
-    id: uniqueID(),
-    title: "Register",
-    icon: IconUserPlus,
-    href: "/authentication/register",
-  },
-  {
-    navlabel: true,
-    subheader: "Extra",
-  },
-  {
-    id: uniqueID(),
-    title: "Icons",
-    icon: IconMoodHappy,
-    href: "/icons",
-  },
-  {
-    id: uniqueID(),
-    title: "Sample Page",
-    icon: IconAperture,
-    href: "/sample-page",
-  },
+  // {
+  //   navlabel: true,
+  //   subheader: "Utilities",
+  // },
+  // {
+  //   id: uniqueID(),
+  //   title: "Typography",
+  //   icon: IconTypography,
+  //   href: "/utilities/typography",
+  // },
+  // {
+  //   id: uniqueID(),
+  //   title: "Shadow",
+  //   icon: IconCopy,
+  //   href: "/utilities/shadow",
+  // },
+  // {
+  //   navlabel: true,
+  //   subheader: "Auth",
+  // },
+  // {
+  //   id: uniqueID(),
+  //   title: "Login",
+  //   icon: IconLogin,
+  //   href: "/authentication/login",
+  // },
+  // {
+  //   id: uniqueID(),
+  //   title: "Register",
+  //   icon: IconUserPlus,
+  //   href: "/authentication/register",
+  // },
+  // {
+  //   navlabel: true,
+  //   subheader: "Extra",
+  // },
+  // {
+  //   id: uniqueID(),
+  //   title: "Icons",
+  //   icon: IconMoodHappy,
+  //   href: "/icons",
+  // },
+  // {
+  //   id: uniqueID(),
+  //   title: "Sample Page",
+  //   icon: IconAperture,
+  //   href: "/sample-page",
+  // },
   {
     navlabel: true,
     subheader: "Payment",
@@ -82,12 +82,12 @@ const Menuitems = [
     icon: IconAperture,
     href: "/payment/offer",
   },
-  {
-    id: uniqueID(),
-    title: "Plan",
-    icon: IconAperture,
-    href: "/payment/plan",
-  },
+  // {
+  //   id: uniqueID(),
+  //   title: "Plan",
+  //   icon: IconAperture,
+  //   href: "/payment/plan",
+  // },
   {
     navlabel: true,
     subheader: "Customer",
