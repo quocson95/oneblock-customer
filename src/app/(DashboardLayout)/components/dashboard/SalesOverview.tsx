@@ -22,12 +22,12 @@ const SalesOverview = () => {
     const [optionscolumnchart, setOptionscolumnchart] = useState();
     const [seriescolumnchart, setSeriescolumnchart] = useState();
     useEffect(()=>{
-        const getPerfTrade = async () => {
-            const response = await axiosInstance.get(API_URI + "/customer/copy-trade/perf-data-chart");
-            if (response.status != 200) {
-                return;
-            }
-            const perfTradeData: PerfTradeData = response.data;
+      const getPerfTrade = async () => {
+          const response = await axiosInstance.get(API_URI + "/customer/copy-trade/perf-data-chart");
+          if (response.status != 200) {
+              return;
+          }
+        const perfTradeData: PerfTradeData = response.data;
         const optCol: any = {
         chart: {
             type: 'bar',
@@ -60,7 +60,7 @@ const SalesOverview = () => {
             enabled: false,
         },
         legend: {
-            show: false,
+            show: true,
         },
         grid: {
             borderColor: 'rgba(0,0,0,0.1)',
@@ -128,7 +128,7 @@ const SalesOverview = () => {
               }
             },
             title: {
-              text: "PNL",
+              text: "PNL ($)",
               style: {
                 color: "#FF1654"
               }
@@ -149,7 +149,7 @@ const SalesOverview = () => {
               }
             },
             title: {
-              text: "ROI",
+              text: "ROI (%)",
               style: {
                 color: "#247BA0"
               }
@@ -169,9 +169,8 @@ const SalesOverview = () => {
         }
       };
       setOptionscolumnchart(options);
-        } 
-        
-        getPerfTrade();
+    } 
+    getPerfTrade();
     },[])
     // select
     const [month, setMonth] = React.useState('1');
@@ -191,7 +190,7 @@ const SalesOverview = () => {
 
     return (
 
-        <DashboardCard title="Sales Overview" action={
+        <DashboardCard title="Trades Overview" action={
             <Select
                 labelId="month-dd"
                 id="month-dd"
@@ -207,7 +206,7 @@ const SalesOverview = () => {
             {optionscolumnchart && seriescolumnchart && <Chart
                 options={optionscolumnchart}
                 series={seriescolumnchart}
-                type="line"
+                type="bar"
                 height={370} width={"100%"}
             />}
         </DashboardCard>

@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import axiosInstance from '@/lib/axiosInstance';
 import { API_URI } from '@/app/global';
 import { parseISO, format } from 'date-fns';
+import { getUser } from '@/lib/user';
 
 
 const products = [
@@ -66,6 +67,7 @@ const ProductPerformance = () => {
     const handleClickOpen = () => {
         setOpen(true);
     };
+    const [showDialogTrade, setShowDialogTrade] = useState<boolean>(false);
 
     const handleClose = (value: CopyTradeData) => {
     setOpen(false);
@@ -76,8 +78,8 @@ const ProductPerformance = () => {
     setOpen(false);
     // setSelectedValue(value);
     // console.log(value)
-    await axiosInstance.post(API_URI + "/customer/copy-trade", value);
-    setCount(count+1);
+        await axiosInstance.post(API_URI + "/customer/copy-trade", value);
+        setCount(count+1);
     };
 
     const [copyTradeOrders, setCopyTradeOrders] = useState<CopyTradeData[]>([])
@@ -88,22 +90,30 @@ const ProductPerformance = () => {
                 setCopyTradeOrders(response.data);
             }
         }
-
+        const checkUser = async () =>{
+            const user = await getUser();
+            if (user?.role == 1 || user?.role==2) {
+                setShowDialogTrade(true);
+            } 
+        }
         loadCopyTradeOrders();
+        checkUser();
     },[count])
     return (
 
-        <DashboardCard title="Product Performance">
+        <DashboardCard title="Trade Orders">
             <Box sx={{ overflow: 'auto', width: { xs: '280px', sm: 'auto' } }}>
-                <Button variant="outlined" onClick={handleClickOpen}>
-                        Open dialog
-                      </Button>
-                      <CopyTradeOrderPopup
-                        selectedValue={selectedValue}
-                        open={open}
-                        onClose={handleClose}
-                        onSubmit={handleSubmit}
-                      />
+                {showDialogTrade && 
+                    <Button variant="outlined" onClick={handleClickOpen}>
+                            Open dialog
+                    </Button>
+                }
+                <CopyTradeOrderPopup
+                selectedValue={selectedValue}
+                open={open}
+                onClose={handleClose}
+                onSubmit={handleSubmit}
+                />
                 <Table
                     aria-label="simple table"
                     sx={{

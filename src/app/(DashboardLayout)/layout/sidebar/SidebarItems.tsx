@@ -1,18 +1,30 @@
-import React from "react";
-import Menuitems from "./MenuItems";
+import React, { useEffect, useState } from "react";
+import Menuitems, { Menu,MenuCustomerItems } from "./MenuItems";
 import { usePathname } from "next/navigation";
 import { Box, List } from "@mui/material";
 import NavItem from "./NavItem";
 import NavGroup from "./NavGroup/NavGroup";
+import { getUser } from "@/lib/user";
 
 const SidebarItems = ({ toggleMobileSidebar }: any) => {
   const pathname = usePathname();
   const pathDirect = pathname;
-
+  const [menu,setMenu] = useState<Menu[]>([]);
+  useEffect(()=>{
+    const checkUser = async () => {
+      const user = await getUser();
+      if (user?.role == 1 || user?.role==2) {
+        setMenu(Menuitems);
+      } else {
+        setMenu(MenuCustomerItems);
+      }
+    }
+    checkUser()
+  },[])
   return (
-    <Box sx={{ px: 3 }}>
+     <Box sx={{ px: 3 }}>
       <List sx={{ pt: 0 }} className="sidebarNav" component="div">
-        {Menuitems.map((item) => {
+        {menu.map((item:  any) => {
           // {/********SubHeader**********/}
           if (item.subheader) {
             return <NavGroup item={item} key={item.subheader} />;
@@ -32,6 +44,7 @@ const SidebarItems = ({ toggleMobileSidebar }: any) => {
         })}
       </List>
     </Box>
+
   );
 };
 export default SidebarItems;

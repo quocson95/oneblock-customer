@@ -12,7 +12,19 @@ import {
 const uniqueID = ()=>{
   return "id" + Math.random().toString(16).slice(2);
 }
-const Menuitems = [
+
+
+export type Menu = {
+  id?: string,
+  title?: string,
+  icon?: any,
+  href?: string,
+  navlabel?: boolean,
+  subheader?: string,
+}
+
+
+const Menuitems:Menu [] = [
   {
     navlabel: true,
     subheader: "Home",
@@ -106,4 +118,41 @@ const Menuitems = [
   },
 ];
 
+const MenuCustomerItems: Menu[] = [
+  {
+    navlabel: true,
+    subheader: "Home",
+  },
+
+  {
+    id: uniqueID(),
+    title: "Dashboard",
+    icon: IconLayoutDashboard,
+    href: "/",
+  },
+  {
+    navlabel: true,
+    subheader: "Payment",
+  },
+  {
+    id: uniqueID(),
+    title: "Offer",
+    icon: IconAperture,
+    href: "/payment/offer",
+  },
+  
+  {
+    navlabel: true,
+    subheader: "Customer",
+  },
+  {
+    id: uniqueID(),
+    title: "Guide",
+    icon: IconAperture,
+    href: "/guide",
+  },
+];
+
+
 export default Menuitems;
+export {MenuCustomerItems};

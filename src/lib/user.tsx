@@ -6,6 +6,7 @@ const getUser = async (): Promise<User | undefined> => {
     try {
       const response = await axiosInstance.get(API_URI + "/user", {
         responseType: "json",
+        // headers: {'Cache-Control': 's-maxage=86400'}
       });
       return response.data;
     } catch (err) {
