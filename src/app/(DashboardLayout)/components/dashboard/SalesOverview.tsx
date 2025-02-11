@@ -1,27 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Select, MenuItem } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import DashboardCard from '@/app/(DashboardLayout)/components/shared/DashboardCard';
 import dynamic from "next/dynamic";
+import { API_URI } from '@/app/global';
+import axiosInstance from '@/lib/axiosInstance';
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
+type ColData= {
+    name: string
+    data: string[]
+}
+
+type PerfTradeData = {
+    xaxis: string[]
+    yaxis: ColData[]
+}
 
 const SalesOverview = () => {
-
-    // select
-    const [month, setMonth] = React.useState('1');
-
-    const handleChange = (event: any) => {
-        setMonth(event.target.value);
-    };
-
-    // chart color
-    const theme = useTheme();
-    const primary = theme.palette.primary.main;
-    const secondary = theme.palette.secondary.main;
-
-    // chart
-    const optionscolumnchart: any = {
+   
+    const [optionscolumnchart, setOptionscolumnchart] = useState();
+    const [seriescolumnchart, setSeriescolumnchart] = useState();
+    useEffect(()=>{
+        const getPerfTrade = async () => {
+            const response = await axiosInstance.get(API_URI + "/customer/copy-trade/perf-data-chart");
+            if (response.status != 200) {
+                return;
+            }
+            const perfTradeData: PerfTradeData = response.data;
+        const optCol: any = {
         chart: {
             type: 'bar',
             fontFamily: "'Plus Jakarta Sans', sans-serif;",
@@ -68,7 +75,7 @@ const SalesOverview = () => {
             tickAmount: 4,
         },
         xaxis: {
-            categories: ['16/08', '17/08', '18/08', '19/08', '20/08', '21/08', '22/08', '23/08'],
+            categories: perfTradeData.xaxis,
             axisBorder: {
                 show: false,
             },
@@ -78,16 +85,109 @@ const SalesOverview = () => {
             fillSeriesColor: false,
         },
     };
-    const seriescolumnchart: any = [
-        {
-            name: 'Eanings this month',
-            data: [355, 390, 300, 350, 390, 180, 355, 390],
+    setOptionscolumnchart(optCol);
+    const seriesCol: any = perfTradeData.yaxis;
+    setSeriescolumnchart(seriesCol);
+
+    var options: any = {
+        chart: {
+          height: 350,
+          type: "line",
+          stacked: false
         },
-        {
-            name: 'Expense this month',
-            data: [280, 250, 325, 215, 250, 310, 280, 250],
+        dataLabels: {
+          enabled: false
         },
-    ];
+        colors: ["#FF1654", "#247BA0"],
+        series: perfTradeData.yaxis,
+        
+        stroke: {
+          width: [4, 4]
+        },
+        plotOptions: {
+          bar: {
+            columnWidth: "20%"
+          }
+        },
+        xaxis: {
+          categories: perfTradeData.xaxis,
+            // categories:[2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016]
+        },
+        yaxis: [
+          {
+            axisTicks: {
+              show: true
+            },
+            axisBorder: {
+              show: true,
+              color: "#FF1654"
+            },
+            labels: {
+              style: {
+                colors: "#FF1654"
+              }
+            },
+            title: {
+              text: "PNL",
+              style: {
+                color: "#FF1654"
+              }
+            }
+          },
+          {
+            opposite: true,
+            axisTicks: {
+              show: true
+            },
+            axisBorder: {
+              show: true,
+              color: "#247BA0"
+            },
+            labels: {
+              style: {
+                colors: "#247BA0"
+              }
+            },
+            title: {
+              text: "ROI",
+              style: {
+                color: "#247BA0"
+              }
+            }
+          }
+        ],
+        tooltip: {
+          shared: false,
+          intersect: true,
+          x: {
+            show: false
+          }
+        },
+        legend: {
+          horizontalAlign: "left",
+          offsetX: 40
+        }
+      };
+      setOptionscolumnchart(options);
+        } 
+        
+        getPerfTrade();
+    },[])
+    // select
+    const [month, setMonth] = React.useState('1');
+
+    const handleChange = (event: any) => {
+        setMonth(event.target.value);
+    };
+
+    // chart color
+    const theme = useTheme();
+    const primary = theme.palette.primary.main;
+    const secondary = theme.palette.secondary.main;
+
+    // chart
+    
+    
 
     return (
 
@@ -99,17 +199,17 @@ const SalesOverview = () => {
                 size="small"
                 onChange={handleChange}
             >
-                <MenuItem value={1}>March 2023</MenuItem>
-                <MenuItem value={2}>April 2023</MenuItem>
-                <MenuItem value={3}>May 2023</MenuItem>
+                <MenuItem value={1}>Weekly 2025</MenuItem>
+                {/* <MenuItem value={2}>April 2023</MenuItem>
+                <MenuItem value={3}>May 2023</MenuItem> */}
             </Select>
         }>
-            <Chart
+            {optionscolumnchart && seriescolumnchart && <Chart
                 options={optionscolumnchart}
                 series={seriescolumnchart}
-                type="bar"
+                type="line"
                 height={370} width={"100%"}
-            />
+            />}
         </DashboardCard>
     );
 };
