@@ -1,5 +1,8 @@
 "use client"
 
+import { API_URI } from "@/app/global"
+import axiosInstance from "@/lib/axiosInstance"
+import { Plan } from "@/lib/model"
 import {
   AppBar,
   Box,
@@ -18,7 +21,7 @@ import {
 } from "@mui/material"
 import Image from "next/image"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const StyledCard = styled(Card)(({ theme, selected }: { theme: any; selected?: boolean }) => ({
   height: "100%",
@@ -30,12 +33,12 @@ const StyledCard = styled(Card)(({ theme, selected }: { theme: any; selected?: b
   }),
 }))
 
-const plans = [
-  // { name: "Hobby", price: "12" },
-  // { name: "Freelancer", price: "24" },
-  // { name: "Startup", price: "32" },
-  { name: "Enterprise", price: "48" },
-]
+// const plans = [
+//   // { name: "Hobby", price: "12" },
+//   // { name: "Freelancer", price: "24" },
+//   // { name: "Startup", price: "32" },
+//   { name: "Enterprise", price: "48" },
+// ]
 
 export default function PricingPage() {
   const [billingCycle, setBillingCycle] = useState("monthly")
@@ -45,6 +48,20 @@ export default function PricingPage() {
       setBillingCycle(newBillingCycle)
     }
   }
+  const [plans, setPlans]= useState<Plan[]>([]);
+  useEffect(()=>{
+    const loadPlans  = async ()=>{
+      try {
+        const response = await axiosInstance.get(API_URI + "/payment/plans", {
+          responseType: "json",
+        })
+        setPlans(response.data);
+      } catch (err) {
+        console.error("Error fetching image:", err)
+      }
+    }
+    loadPlans();
+  },[])
 
   return (
     <Box sx={{ bgcolor: "background.default", minHeight: "100vh" }}>
@@ -73,12 +90,12 @@ export default function PricingPage() {
               borderRadius: 2,
             }}
           >
-            {/* <ToggleButton value="monthly" aria-label="monthly billing">
+            <ToggleButton value="monthly" aria-label="monthly billing">
               Monthly billing
-            </ToggleButton> */}
-            <ToggleButton value="yearly" aria-label="yearly billing">
-              Yearly billing
             </ToggleButton>
+            {/* <ToggleButton value="yearly" aria-label="yearly billing">
+              Yearly billing
+            </ToggleButton> */}
           </ToggleButtonGroup>
 
           {/* Pricing Cards */}
@@ -90,15 +107,14 @@ export default function PricingPage() {
                     <Stack spacing={3}>
                       <Typography variant="h2">{plan.name}</Typography>
                       <Typography variant="body2" color="text.secondary">
-                        All the feature
+                        {plan.desp}
                       </Typography>
                       <Typography variant="h2">
-                        ${plan.price}
                         <Typography component="span" variant="body1" color="text.secondary" sx={{ ml: 1 }}>
-                          /month
+                         {plan.priceDisp}
                         </Typography>
                       </Typography>
-                      <Button variant="contained" fullWidth  component={Link} href="/payment/plan" > Subscribe
+                      <Button variant="contained" fullWidth  component={Link} href={`/payment/plan?id=${plan.id}`} > Subscribe
                       </Button>
                     </Stack>
                   </CardContent>

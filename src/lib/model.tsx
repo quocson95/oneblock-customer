@@ -17,10 +17,12 @@ export interface Subscribe {
 }
 
 export interface Plan {
+    id: number
     name: string
     price: number
     priceDisp: string
     currency: string
-    durationExtend: string,
+    durationExtend: string
+    desp: string
 
 }
