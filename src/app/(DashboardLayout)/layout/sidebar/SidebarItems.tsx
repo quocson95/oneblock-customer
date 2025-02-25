@@ -5,6 +5,7 @@ import { Box, List } from "@mui/material";
 import NavItem from "./NavItem";
 import NavGroup from "./NavGroup/NavGroup";
 import { getUser } from "@/lib/user";
+import { User } from "@/lib/model";
 
 const SidebarItems = ({ toggleMobileSidebar }: any) => {
   const pathname = usePathname();
@@ -12,12 +13,21 @@ const SidebarItems = ({ toggleMobileSidebar }: any) => {
   const [menu,setMenu] = useState<Menu[]>([]);
   useEffect(()=>{
     const checkUser = async () => {
-      const user = await getUser();
-      if (user?.role == 1 || user?.role==2) {
+      // const user = await getUser();
+     
+      getUser({ 
+        onSuccess: (user: User) =>{
+         if (user?.role == 1 || user?.role==2) {
         setMenu(Menuitems);
       } else {
         setMenu(MenuCustomerItems);
       }
+      }, 
+      onError: (err: any) =>{
+        console.log(err)
+        
+      }
+      })
     }
     checkUser()
   },[])

@@ -11,14 +11,23 @@ import { useEffect } from "react";
 import { getUser } from "@/lib/user";
 import { GotoHomePage } from "@/lib/goto";
 import { useRouter } from "next/navigation";
+import { User } from "@/lib/model";
 const Login = () => {
   const router = useRouter();
   useEffect(()  => {
-    getUser().then( (user) => {
-      console.log('detect user => redirect to dashboard',user);
+    // getUser().then( (user) => {
+    //   console.log('detect user => redirect to dashboard',user);
+    //   GotoHomePage(router);
+    // }
+    // )
+    getUser({ 
+      onSuccess: (user: User) =>{
       GotoHomePage(router);
+    }, 
+    onError: (err: any) =>{
+      console.log(err)
     }
-    )
+    })
   })
   const loginGoolgeSSOURI = () => {
    return API_URI + '/sso/google';

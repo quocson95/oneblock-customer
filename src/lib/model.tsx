@@ -14,6 +14,7 @@ export interface User {
 export interface Subscribe {
     plan?: Plan,
     expireUnix: number,
+    expireDate: string
 }
 
 export interface Plan {

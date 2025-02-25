@@ -18,6 +18,7 @@ import axiosInstance from '@/lib/axiosInstance';
 import { API_URI } from '@/app/global';
 import { parseISO, format } from 'date-fns';
 import { getUser } from '@/lib/user';
+import { User } from '@/lib/model';
 
 
 const products = [
@@ -91,10 +92,17 @@ const ProductPerformance = () => {
             }
         }
         const checkUser = async () =>{
-            const user = await getUser();
-            if (user?.role == 1 || user?.role==2) {
-                setShowDialogTrade(true);
-            } 
+            getUser({ 
+                onSuccess: (user: User) =>{
+                if (user?.role == 1 || user?.role==2) {
+                    setShowDialogTrade(true);
+                } 
+              }, 
+              onError: (err: any) =>{
+                console.log(err)
+              }
+              })
+            
         }
         loadCopyTradeOrders();
         checkUser();

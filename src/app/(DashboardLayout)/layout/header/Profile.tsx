@@ -31,10 +31,21 @@ const Profile = () => {
   };
   const router = useRouter()
   useEffect(() => {
-    getUser().then( setUser).catch( (err)=>{
+    // getUser().then( setUser).catch( (err)=>{
+    //   console.log(err)
+    //   setCookie(AuthJWTLSKey, "");
+    //   GotoLoginPage(router);
+    // });
+    getUser({ 
+      onSuccess: (user: User) =>{
+      setUser(user);
+    }, 
+    onError: (err: any) =>{
+      console.log(err)
       setCookie(AuthJWTLSKey, "");
       GotoLoginPage(router);
-    });
+    }
+    })
   }, [])
 
   return (
@@ -100,13 +111,16 @@ const Profile = () => {
         {
           user?.subscribe?.plan ?
           (
-
+            <Box>
           <MenuItem>
             <ListItemIcon>
               <IconBrandPaypal width={20} />
             </ListItemIcon>
             <ListItemText>{user?.subscribe?.plan.name}</ListItemText>
           </MenuItem>
+
+          <MenuItem>     <ListItemText> Valid: {user.subscribe?.expireDate}</ListItemText></MenuItem>
+          </Box>
           ):
           <Box mt={1} py={1} px={2}>
             <Button
