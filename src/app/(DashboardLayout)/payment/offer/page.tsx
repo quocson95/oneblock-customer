@@ -63,6 +63,7 @@ export default function PricingPage() {
     loadPlans();
   },[])
 
+
   return (
     <Box sx={{ bgcolor: "background.default", minHeight: "100vh" }}>
      

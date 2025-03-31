@@ -125,10 +125,6 @@ export default function CopyTradeOrderPopup(props: SimpleDialogProps) {
             defaultValue={0}
             rules={{
               required: "PNL is required",
-              min: {
-                value: 0,
-                message: "PNL must be larger than zero",
-              },
             }}
             render={({ field }) => (
               <TextField
