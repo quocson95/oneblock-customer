@@ -30,14 +30,15 @@ const SalesOverview = () => {
         const perfTradeData: PerfTradeData = response.data;
         const optCol: any = {
         chart: {
-            type: 'bar',
             fontFamily: "'Plus Jakarta Sans', sans-serif;",
             foreColor: '#adb0bb',
             toolbar: {
                 show: true,
             },
             height: 370,
+            
         },
+        
         colors: [primary, secondary],
         plotOptions: {
             bar: {
@@ -92,7 +93,6 @@ const SalesOverview = () => {
     var options: any = {
         chart: {
           height: 350,
-          type: "line",
           stacked: false
         },
         dataLabels: {
@@ -157,10 +157,10 @@ const SalesOverview = () => {
           }
         ],
         tooltip: {
-          shared: false,
-          intersect: true,
+          shared: true,
+          intersect: false,
           x: {
-            show: false
+            show: true
           }
         },
         legend: {
@@ -206,7 +206,7 @@ const SalesOverview = () => {
             {optionscolumnchart && seriescolumnchart && <Chart
                 options={optionscolumnchart}
                 series={seriescolumnchart}
-                type="bar"
+                type="area"
                 height={370} width={"100%"}
             />}
         </DashboardCard>

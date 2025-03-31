@@ -96,7 +96,7 @@ export default function CopyTradeOrderPopup(props: SimpleDialogProps) {
               />
             )}
           />
-          <Controller
+          {/* <Controller
             name="statusOrder"
             control={control}
             defaultValue={0}
@@ -118,7 +118,7 @@ export default function CopyTradeOrderPopup(props: SimpleDialogProps) {
                 helperText={errors.statusOrder?.message}
               />
             )}
-          />
+          /> */}
           <Controller
             name="pnl"
             control={control}
@@ -201,7 +201,7 @@ export default function CopyTradeOrderPopup(props: SimpleDialogProps) {
                 {...field}
                 margin="normal"
                 fullWidth
-                label="Long"
+                label="Long=1/Short=0"
                 error={!!errors.long}
                 helperText={errors.long?.message}
               />
