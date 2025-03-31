@@ -113,7 +113,7 @@ const ProductPerformance = () => {
             <Box sx={{ overflow: 'auto', width: { xs: '280px', sm: 'auto' } }}>
                 {showDialogTrade && 
                     <Button variant="outlined" onClick={handleClickOpen}>
-                            Open dialog
+                            Add Order
                     </Button>
                 }
                 <CopyTradeOrderPopup
@@ -171,8 +171,8 @@ const ProductPerformance = () => {
                     </TableHead>
                     <TableBody>
                         {copyTradeOrders.map((copyTrade: CopyTradeData) => (
-                            <TableRow key={copyTrade.id}>
-                                <TableCell>
+                            <TableRow key={copyTrade.id} >
+                                <TableCell >
                                     <Typography
                                         sx={{
                                             fontSize: "15px",
@@ -212,21 +212,27 @@ const ProductPerformance = () => {
                                         x{copyTrade.leverage}
                                     </Typography>
                                 </TableCell>
-                                <TableCell  align="center">
-                                    <Typography color="textSecondary" variant="subtitle2" fontWeight={400}>
+                                <TableCell  align="center" >
+                                    <Typography  style={copyTrade.pnl>0?{color:'green'}:{color:'red'}} variant="subtitle2" fontWeight={400}>
                                         {copyTrade.pnl}
                                     </Typography>
                                 </TableCell >
-                                <TableCell  align="center">
-                                    <Typography color="textSecondary" variant="subtitle2" fontWeight={400}>
+                                <TableCell  align="center" style={copyTrade.roi>0?{color:'green'}:{color:'red'}}>
+                                    <Typography variant="subtitle2" fontWeight={400}>
                                         {copyTrade.roi}%
                                     </Typography>
                                 </TableCell >
                                 <TableCell align="center">
-                                    <Typography variant="h6">{copyTrade.long?"LONG":"SHORT"}</Typography>
+                                    <Typography variant="h6">
+                                    <span style={copyTrade.long?{color:'green'}:{color:'red'}}>
+                                        {copyTrade.long?"LONG":"SHORT"}
+                                    </span>
+                                    </Typography>
                                 </TableCell>
+                                
                             </TableRow>
                         ))}
+                        
                     </TableBody>
                 </Table>
             </Box>
